@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BFP Records Management System - Bureau of Fire Protection</title>
+  <meta name="description" content="Web-based records management and administrative system for the Bureau of Fire Protection.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bfp-blue': '#3b82f6',
+            'bfp-red': '#dc2626',
+            'bfp-orange': '#f59e0b',
+            'bfp-gray': '#374151',
+            'bfp-light': '#f8fafc',
+            'bfp-border': '#e5e7eb'
+          },
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles2.css">
+</head>
+<body class="bg-bfp-light">
+  </head>
+<body class="bg-bfp-light">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-bfp-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-bfp-red rounded-lg flex items-center justify-center">
+                            <i class="fas fa-fire text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-semibold text-bfp-gray">BFP Records Management</h1>
+                            <p class="text-sm text-gray-500">Bureau of Fire Protection</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="relative btn-secondary">
+                        <i class="fas fa-bell text-gray-400"></i>
+                        <span class="absolute -top-1 -right-1 bg-bfp-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                            3
+                        </span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-bfp-blue rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <div class="text-sm text-left">
+                            <p class="font-medium text-bfp-gray">Admin User</p>
+                            <p class="text-gray-500">Administrator</p>
+                        </div>
+                       
+
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                        <button onclick="logoutUser()" class="btn btn-danger">Logout</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-sm min-h-screen border-r border-bfp-border">
+            <nav class="mt-6 px-6">
+                <div class="space-y-2">
+                    <!-- Main Navigation -->
+                    <div class="sidebar-link active flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer">
+                        <i class="fas fa-chart-bar w-5 h-5"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-folder-open w-5 h-5"></i>
+                        <span>Records Management</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-file-alt w-5 h-5"></i>
+                        <span>Incident Reports</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-check-square w-5 h-5"></i>
+                        <span>Administrative Tasks</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span>Personnel Management</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-calendar w-5 h-5"></i>
+                        <span>Scheduling</span>
+                    </div>
+                    
+                    <div class="border-t border-bfp-border my-4"></div>
+                    
+                    <!-- Emergency Navigation -->
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-bfp-red hover:bg-red-50">
+                        <i class="fas fa-exclamation-triangle w-5 h-5"></i>
+                        <span>Emergency Protocols</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-cloud w-5 h-5"></i>
+                        <span>Data Backup</span>
+                    </div>
+                    <div class="sidebar-link flex items-center space-x-3 px-3 py-2 rounded-lg font-medium cursor-pointer text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="space-y-8">
+                <!-- Dashboard Header -->
+                <div>
+                    <h2 class="text-2xl font-bold text-bfp-gray mb-2">Dashboard Overview</h2>
+                    <p class="text-gray-600">Real-time system status and recent activities</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card bg-white rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Active Incidents</p>
+                                <p class="text-3xl font-bold text-bfp-red">5</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-fire text-bfp-red text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-red-600">Requires immediate attention</span>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Pending Reports</p>
+                                <p class="text-3xl font-bold text-bfp-orange">12</p>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt text-bfp-orange text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-orange-600">Awaiting review</span>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Personnel On Duty</p>
+                                <p class="text-3xl font-bold text-green-600">48</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600">92% capacity</span>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">System Status</p>
+                                <p class="text-3xl font-bold text-green-600">Online</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-server text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600">99.8% uptime</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Dashboard Content -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Recent Incidents -->
+                    <div class="lg:col-span-2">
+                        <div class="card bg-white rounded-lg">
+                            <div class="flex flex-row items-center justify-between p-6 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-bfp-gray">Recent Incident Reports</h3>
+                                <button class="btn-secondary text-bfp-blue hover:text-blue-700">
+                                    View All <i class="fas fa-external-link-alt ml-2"></i>
+                                </button>
+                                
+
+                            </div>
+                            <div class="p-6">
+                                <div class="space-y-4">
+                                    <!-- Incident Item -->
+                                    <div class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-fire text-bfp-red"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-bfp-gray">Residential Fire - Quezon City</p>
+                                            <p class="text-sm text-gray-500">Block 5, Barangay Central</p>
+                                            <p class="text-xs text-gray-400">December 8, 2024</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <span class="badge badge-red">Active</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-ambulance text-blue-600"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-bfp-gray">Medical Emergency Response</p>
+                                            <p class="text-sm text-gray-500">Makati Business District</p>
+                                            <p class="text-xs text-gray-400">December 8, 2024</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <span class="badge badge-yellow">In Progress</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-search text-green-600"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-bfp-gray">Building Safety Inspection</p>
+                                            <p class="text-sm text-gray-500">BGC, Taguig City</p>
+                                            <p class="text-xs text-gray-400">December 7, 2024</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <span class="badge badge-green">Completed</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar - Tasks and Quick Actions -->
+                    <div class="space-y-6">
+                        <!-- Pending Tasks -->
+                        <div class="card bg-white rounded-lg">
+                            <div class="p-6 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-bfp-gray">Pending Tasks</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <input type="checkbox" class="rounded border-gray-300 text-bfp-blue focus:ring-bfp-blue">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-bfp-gray">Monthly Equipment Inspection</p>
+                                            <p class="text-xs text-gray-500">Due: December 15, 2024</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <input type="checkbox" class="rounded border-gray-300 text-bfp-blue focus:ring-bfp-blue">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-bfp-gray">Fire Safety Training Session</p>
+                                            <p class="text-xs text-gray-500">Due: December 12, 2024</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <input type="checkbox" class="rounded border-gray-300 text-bfp-blue focus:ring-bfp-blue">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-bfp-gray">Annual Report Compilation</p>
+                                            <p class="text-xs text-gray-500">Due: December 20, 2024</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card bg-white rounded-lg">
+                            <div class="p-6 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-bfp-gray">Quick Actions</h3>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <button class="btn-primary w-full">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    New Incident Report
+                                </button>
+                                
+                                <button class="btn-secondary w-full">
+                                    <i class="fas fa-upload mr-2"></i>
+                                    Upload Document
+                                </button>
+                                
+                                <button class="btn-secondary w-full text-bfp-red border-red-200 hover:bg-red-50">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    Emergency Protocol
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- System Alerts -->
+                        <div class="card bg-white rounded-lg">
+                            <div class="p-6 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-bfp-gray">System Alerts</h3>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <div class="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium text-yellow-800">Scheduled Maintenance</p>
+                                        <p class="text-xs text-yellow-700">System backup scheduled for 2:00 AM</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <i class="fas fa-upload text-blue-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="text-sm font-medium text-blue-800">Update Available</p>
+                                        <p class="text-xs text-blue-700">New features and security updates ready</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Records Management Preview -->
+                <div class="card bg-white rounded-lg">
+                    <div class="flex flex-row items-center justify-between p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-bfp-gray">Recent Records Activity</h3>
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <input type="text" placeholder="Search records..." class="form-input pl-10 pr-4 py-2">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <button class="btn-secondary">
+                                <i class="fas fa-filter mr-2"></i>
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document</th>
+                                        <th>Type</th>
+                                        <th>Created</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <i class="fas fa-file-pdf text-red-600"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-bfp-gray">Fire Incident Report - QC-2024-001</div>
+                                                    <div class="text-sm text-gray-500">2.4 MB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-red">Incident Report</span>
+                                        </td>
+                                        <td class="text-sm text-gray-500">
+                                            December 8, 2024
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-yellow">Pending</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn-secondary text-bfp-blue hover:text-blue-700 mr-2">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-secondary text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <i class="fas fa-file-alt text-blue-600"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-bfp-gray">Safety Inspection Checklist</div>
+                                                    <div class="text-sm text-gray-500">1.8 MB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-blue">Inspection</span>
+                                        </td>
+                                        <td class="text-sm text-gray-500">
+                                            December 7, 2024
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-green">Approved</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn-secondary text-bfp-blue hover:text-blue-700 mr-2">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-secondary text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <i class="fas fa-file-excel text-green-600"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-bfp-gray">Personnel Attendance Sheet</div>
+                                                    <div class="text-sm text-gray-500">956 KB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-green">Personnel</span>
+                                        </td>
+                                        <td class="text-sm text-gray-500">
+                                            December 6, 2024
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-green">Approved</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn-secondary text-bfp-blue hover:text-blue-700 mr-2">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-secondary text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for New Incident Report -->
+    <div id="newIncidentModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-bfp-gray">Create New Incident Report</h2>
+                <button onclick="closeModal('newIncidentModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Type *</label>
+                        <select class="form-input">
+                            <option value="">Select type</option>
+                            <option value="fire">Fire</option>
+                            <option value="rescue">Rescue</option>
+                            <option value="medical">Medical Emergency</option>
+                            <option value="inspection">Inspection</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-input">
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Title *</label>
+                    <input type="text" class="form-input" placeholder="Brief description of the incident">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Location *</label>
+                    <input type="text" class="form-input" placeholder="Address or location of the incident">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" rows="4" placeholder="Detailed description of the incident"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-2">
+                    <button type="button" onclick="closeModal('newIncidentModal')" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BFP Records Management System - Login</title>
+    <meta name="description" content="Login to the Bureau of Fire Protection Records Management System"/>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+
+    <!-- Add this in your HTML <head> or before your script -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-bfp-light min-h-screen">
+   <body class="bg-bfp-light min-h-screen">
+    <div class="grid lg:grid-cols-2 min-h-screen">
+        <!-- Left Side - Forms -->
+        <div class="flex items-center justify-center p-8">
+            <div class="w-full max-w-md space-y-8">
+                <!-- Header -->
+                <div class="text-center">
+                    <div class="mx-auto h-16 w-16 bg-bfp-red rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-fire text-white text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-bfp-gray">BFP Records Management</h2>
+                    <p class="text-gray-600 mt-2">Bureau of Fire Protection</p>
+                </div>
+
+                <!-- Alert Messages -->
+                <div id="alertContainer"></div>
+
+                <!-- Tabs -->
+                <div class="w-full">
+                    <div class="flex border-b border-gray-200">
+                        <button class="tab-button active" onclick="switchTab('login')">Login</button>
+                        <button class="tab-button" onclick="switchTab('register')">Register</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="loginTab" class="tab-content active">
+                        <div class="bg-white shadow-sm rounded-lg mt-6">
+                            <div class="p-6">
+                                <div class="mb-6">
+                                    <h3 class="text-xl font-semibold text-bfp-gray">Sign In</h3>
+                                    <p class="text-gray-600 text-sm mt-1">Enter your credentials to access the system</p>
+                                </div>
+                                
+                                <form id="loginForm" class="space-y-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="login-username">Username</label>
+                                        <input
+                                            type="text"
+                                            id="login-username"
+                                            name="username"
+                                            class="form-input"
+                                            placeholder="Enter your username"
+                                            required
+                                        />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="login-password">Password</label>
+                                        <input
+                                            type="password"
+                                            id="login-password"
+                                            name="password"
+                                            class="form-input"
+                                            placeholder="Enter your password"
+                                            required
+                                        />
+                                    </div>
+                                    
+                                    <button type="submit" id="loginButton" class="btn-primary">
+                                        Sign In
+                                    </button>
+                                </form>
+                                
+                                <!-- Demo Credentials -->
+                                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <h4 class="font-medium text-blue-800 mb-2">Demo Credentials:</h4>
+                                    <div class="text-sm text-blue-700 space-y-1">
+                                        <p><strong>Admin:</strong> admin / admin123</p>
+                                        <p><strong>Personnel:</strong> officer1 / officer123</p>
+                                        <p><strong>Regional:</strong> regional1 / regional123</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="registerTab" class="tab-content">
+                        <div class="bg-white shadow-sm rounded-lg mt-6">
+                            <div class="p-6">
+                                <div class="mb-6">
+                                    <h3 class="text-xl font-semibold text-bfp-gray">Create Account</h3>
+                                    <p class="text-gray-600 text-sm mt-1">Register a new user account for the system</p>
+                                </div>
+                                
+                                <form id="registerForm" class="space-y-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-fullname">Full Name</label>
+                                        <input
+                                            type="text"
+                                            id="register-fullname"
+                                            name="fullName"
+                                            class="form-input"
+                                            placeholder="Enter your full name"
+                                            required
+                                        />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-username">Username</label>
+                                        <input
+                                            type="text"
+                                            id="register-username"
+                                            name="username"
+                                            class="form-input"
+                                            placeholder="Choose a username"
+                                            required
+                                        />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-password">Password</label>
+                                        <input
+                                            type="password"
+                                            id="register-password"
+                                            name="password"
+                                            class="form-input"
+                                            placeholder="Create a password"
+                                            required
+                                        />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-role">Role</label>
+                                        <select id="register-role" name="role" class="form-input" required>
+                                            <option value="">Select role</option>
+                                            <option value="admin">Administrator</option>
+                                            <option value="personnel">Personnel</option>
+                                            <option value="regional">Regional Office</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-station">Station</label>
+                                        <input
+                                            type="text"
+                                            id="register-station"
+                                            name="station"
+                                            class="form-input"
+                                            placeholder="e.g., Manila Fire Station"
+                                        />
+                                    </div>
+                                    
+                                    <button type="submit" id="registerButton" class="btn-primary">
+                                        Create Account
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Hero -->
+        <div class="hidden lg:flex bg-gradient-to-br from-bfp-blue to-blue-700 p-8 text-white">
+            <div class="flex flex-col justify-center space-y-8">
+                <div>
+                    <h1 class="text-4xl font-bold mb-4">
+                        Comprehensive Records Management System
+                    </h1>
+                    <p class="text-lg text-blue-100 mb-8">
+                        Streamline fire service records, reports, and administrative tasks for the Bureau of Fire Protection.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt text-2xl text-blue-200 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Secure Access</h3>
+                            <p class="text-sm text-blue-200">Role-based permissions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <i class="fas fa-file-alt text-2xl text-blue-200 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Document Management</h3>
+                            <p class="text-sm text-blue-200">Easy file organization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <i class="fas fa-users text-2xl text-blue-200 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Personnel Tracking</h3>
+                            <p class="text-sm text-blue-200">Staff management tools</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <i class="fas fa-fire text-2xl text-blue-200 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Emergency Support</h3>
+                            <p class="text-sm text-blue-200">Quick response protocols</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-blue-400 pt-6">
+                    <h3 class="font-semibold mb-4">Key Features:</h3>
+                    <ul class="space-y-2 text-blue-100">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-300 mr-2"></i>
+                            Real-time incident reporting and tracking
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-300 mr-2"></i>
+                            Digital document storage and retrieval
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-300 mr-2"></i>
+                            Task automation and scheduling
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-300 mr-2"></i>
+                            Emergency protocol quick access
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-300 mr-2"></i>
+                            Cloud backup and data security
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Your HTML content here -->
+    <!-- ... -->
+    <script src="script.js"></script>
+</body>
+</html>
